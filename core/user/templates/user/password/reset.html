@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6 ml-auto mr-auto mt-5">
+        <div class="card">
+            <div class="card-header bg-dark text-white">Password reset</div>
+            <div class="card-body">
+                <form method="post">{% csrf_token %}
+                    <fieldset class="module aligned">
+                        <form action="" method="post" class="form">
+                            {% if form.non_field_errors %}
+                                <div class="non-field-errors alert alert-danger">
+                                    {% for err in form.non_field_errors %}
+                                        <p class="form-error">{{ err }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% for field in form %}
+                                <fieldset class="form-group row mb25">
+                                    <div class="col-md-12">
+                                        <label>
+                                            {{ field.label }}
+                                        </label>
+                                        {% if field.errors %}
+                                            {{ field }}
+                                        {% else %}
+                                            {{ field }}
+                                        {% endif %}
+                                        {% for err in field.errors %}
+                                            <div class="form-control-feedback invalid-feedback">{{ err }}</div>
+                                        {% endfor %}
+                                        <small class="form-text text-muted">
+                                            {{ field.help_text }}
+                                        </small>
+                                    </div>
+                                </fieldset>
+                            {% endfor %}
+
+                            <div class="form-actions text-center">
+                                {% csrf_token %}
+                                <button type="submit" role="button" class="btn btn-primary btn-dark">Восстановление доступа</button>
+                            </div>
+                        </form>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

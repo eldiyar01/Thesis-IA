@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Test variants{% endblock %}
+
+{% block content %}
+<div class="card text-center ml-5 mr-5">
+    <h1 class="card-header bg-white mb-5">{{ test.title }}</h1>
+    <div class="card-deck pl-3 pr-3">
+        {% for variants in test.variants.all %}
+         <div class="col-3">
+            <div class="card border-info mb-3" style="max-width: 18rem;">
+                <div class="card-header border-info">{{ variants.title }}</div>
+                <div class="card-body text-info">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">{{ variants.description }}</p>
+                    <p class="card-text">Количество вопросов:   {{ variants.questions.count }}</p>
+                    <a class="btn btn-outline-info" href="{{ variants.get_absolute_url }}">start</a>
+                </div>
+            </div>
+         </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

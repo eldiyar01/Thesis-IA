@@ -1,0 +1,24 @@
+<div class="media">
+    <a href="{{ profile.url }}">
+        {% if profile.avatar and profile.crop50.url %}
+            <img class="mr-3 rounded-circle user-badge-photo" src="{{ profile.crop50.url }}" alt="{{ profile }}">
+        {% else %}
+            <img class="mr-3 rounded-circle user-badge-photo" src="{% static 'img/user/default-avatar-64.png' %}"
+                 alt="{{ profile }}">
+        {% endif %}
+    </a>
+    <div class="media-body">
+        <h6 class="m-0"><a href="{{ profile.url }}">{{ profile }}</a></h6>
+        <div>
+            <small class="text-muted">{% trans 'дата регистрации' %}: {{ profile.date_joined|date:"SHORT_DATE_FORMAT" }}</small>
+        </div>
+        {% if profile.pk != request.user.pk %}
+            <div>
+                <a href="{% url 'control:message:conversation' user_id=profile.pk %}">message</a>
+            </div>
+        {% endif %}
+        {#        <div>#}
+        {#            <small class="text-muted">{% trans 'last seen' %}: {{ profile.last_login|timesince }}</small>#}
+        {#        </div>#}
+    </div>
+</div>

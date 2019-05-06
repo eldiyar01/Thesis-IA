@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Tests{% endblock %}
+
+{% block content %}
+<div class="container bg-white p-5 rounded">
+    <div class="row">
+        <div class="card-deck">
+            {% for test in tests %}
+                <div class="col-4">
+                    <div class="card">
+                        <img src="{{ test.image.url }}" class="card-img-top" height="200" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ test.title }}</h5>
+                            <p class="card-text">{{ test.description }}</p>
+                            <p class="card-text"><small class="text-muted">Рекомендуем проходит не чеще чем 1 раз в неделю</small></p>
+                            <hr>
+                            <a class="btn btn-outline-primary" href="{{ test.get_absolute_url }}" role="button">
+                               Начать тест
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

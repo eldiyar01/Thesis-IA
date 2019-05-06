@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>you are logged out</h2>
+            <a href="{% url 'user:signin' %}"></a>
+        </div>
+    </div>
+{% endblock %}

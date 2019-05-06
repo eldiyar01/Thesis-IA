@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} Questions {% endblock %}
+
+{% block content %}
+<div class="container bg-white  mb-5 pt-5">
+    <div class="text-center">
+        <h1>{{ v_questions.tests.title }}</h1>
+        <h5>({{ v_questions.title }})</h5>
+    </div>
+    <div class="row">
+        <h2 class="sticky-top">Таймер</h2>
+    </div>
+    <div class="row">
+        <form class="text-center col-12" action="{% url 'cwt:test-results' %}">
+            {% for question in v_questions.questions.all %}
+                <div class="col-12">
+                    <h4>{{ question.title }}</h4>
+                </div>
+                {% for answer in question.answers.all %}
+                    <input type="radio" name="question-{{ question.pk}}" value="{{ answer.pk }}" id="{{ answer.pk }}">
+                    <label for="{{ answer.pk }}"> {{ answer.text }}</label>
+                {% endfor %}
+                <hr class="mb-5">
+            {% endfor %}
+            <div class="col-12 text-center mt-5 mb-5">
+                <button class="btn btn-outline-info" type="submit">Закончить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
