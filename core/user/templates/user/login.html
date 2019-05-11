@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-6 ml-auto mr-auto mt-5">
         <div class="card ">
-            <div class="card-header bg-dark text-white">Войти</div>
+            <div class="card-header bg-primary text-white">Войти</div>
             <div class="card-body">
                 <form action="" method="post" class="form">
                     {% if form.non_field_errors %}
@@ -38,7 +38,7 @@
 
                     <div class="form-actions text-center">
                         {% csrf_token %}
-                        <button type="submit" role="button" class="btn btn-dark btn-sm">Войти</button>
+                        <button type="submit" role="button" class="btn btn-primary btn-sm">Войти</button>
                         &nbsp;&nbsp;
                         или
                         <a href="{% url 'user:signup' %}" class="btn btn-link">Зарегестрироваться</a>

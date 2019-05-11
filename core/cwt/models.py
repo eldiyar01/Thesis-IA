@@ -56,16 +56,13 @@ class Answer(models.Model):
         return self.text
 
 
-class UserAnswers(models.Model):
+class UserAnswer(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='user_answers')
     answer = models.ForeignKey('Answer', on_delete=models.CASCADE, related_name='+')
 
 
-
-class UserRating(models.Model):
-    user = models.ForeignKey(
-        'user.User',
-        on_delete=models.CASCADE,
-        related_name='+'
-        )
-
+class UserResult(models.Model):
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='user_results')
+    variants = models.ForeignKey('Variant', on_delete=models.CASCADE, related_name='variant_results')
+    score = models.FloatField()
+    date = models.DateTimeField(auto_now_add=True)
