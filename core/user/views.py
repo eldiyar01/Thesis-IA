@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model, login, views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -11,25 +12,23 @@ from django.utils.http import base36_to_int, int_to_base36
 from django.utils.translation import ugettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 
-from .forms import UserCreationForm
+from .forms import UserCreationForm, LoginForm, FeedbackForm
 
 
+@login_required
 def home(request):
     return render(request, 'profile/home.html')
 
 
-def logout(request):
-    request.session.flush()
-    return redirect('/user/')
+class LogoutView(auth_views.LogoutView):
+    template_name = 'user/logout.html'
 
 
 class LoginView(auth_views.LoginView):
+    form_class = LoginForm
     template_name = 'user/login.html'
-
-# class LogoutView(auth_views.LogoutView):
-#     template_name = 'user/logout.html'
 
 
 class SignupView(CreateView):
@@ -67,7 +66,7 @@ class SignupView(CreateView):
 
 
 class SignupDoneView(TemplateView):
-    template_name = 'user/signup-done.html'
+    template_name = 'user/signup_done.html'
 
 
 class SignUpConfirmView(View):
@@ -89,18 +88,39 @@ class SignUpConfirmView(View):
         return redirect('cwt:home')
 
 
-class PasswordReset(auth_views.PasswordResetView):
+class PasswordResetView(auth_views.PasswordResetView):
     template_name = 'user/password/reset.html'
-    email_template_name = 'user/password/reset-email.html'
+    email_template_name = 'user/password/reset_email.html'
     success_url = reverse_lazy('user:password-reset-done')
 
 
-class PasswordResetDone(auth_views.PasswordResetDoneView):
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
     template_name = 'user/password/done.html'
 
-class PasswordResetConfirm(auth_views.PasswordResetConfirmView):
-    template_name = 'user/password/reset-confirm.html'
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'user/password/reset_confirm.html'
     success_url = reverse_lazy('user:password-reset-complete')
 
-class PasswordResetComplete(auth_views.PasswordResetCompleteView):
-    template_name = 'user/password/reset-complete.html'
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'user/password/reset_complete.html'
+
+
+class PasswordChangeView(auth_views.PasswordChangeView):
+    success_url = reverse_lazy('user:password-change-done')
+    template_name = 'user/password/password_change_form.html'
+
+
+class PasswordChangeDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'user/password/password_change_done.html'
+
+
+class FeedbackView(FormView):
+    template_name = 'feedback_email/email_form.html'
+    form_class = FeedbackForm
+    success_url = reverse_lazy(':home')
+
+    def form_valid(self, form):
+        form.send_email()
+        return super().form_valid(form)

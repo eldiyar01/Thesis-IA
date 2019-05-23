@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <title>{% block title %} Home {% endblock %}</title>
+    <script src="{% static 'js/timer.js' %}" defer></script>
 </head>
 
 <body style="background-color:rgb(235,235,255)">
-    <nav class="navbar navbar-expand-lg navbar navbar-dark mb-5" style="background-color:rgb(40,20,170)">
+    <nav class="navbar navbar-expand-lg navbar navbar-dark" style="background-color:rgb(40,20,170)">
         <a class="navbar-brand" href="{% url 'cwt:home' %}">Testing</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
@@ -21,6 +22,9 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm ml-1" href="{% url 'user:profile-home' %}">Личный кабинет</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="btn btn-outline-light btn-sm ml-1" href="{% url 'user:logout' %}">Выйти</a>
                     </li>
                 {% endif %}
@@ -30,5 +34,12 @@
 {% block content %}
 
 {% endblock %}
+{% if request.user.is_authenticated %}
+    {% block end %}
+    <nav class="fixed-bottom" style="background-color:rgb(235,235,255)">
+        <p class="text-sm-center">Вопросы? Ошибки? Идеи для улучшения сайта? <a href="{% url 'user:feedback' %}">Обратная связь</a></p>
+    </nav>
+    {% endblock %}
+{% endif %}
 </body>
 </html>

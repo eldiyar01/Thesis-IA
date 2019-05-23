@@ -4,6 +4,12 @@
 <div class="container bg-white rounded">
     <div class="row">
        <div class="col-12 text-center"><h2>Результаты</h2></div>
+        <div class="col">
+            <p>{{ user }}! {{ message }}</p>
+
+            <p>Вы набрали {{ user_points}} балла из {{ all_points }}</p>
+        </div>
     </div>
 </div>
 {% endblock %}
+

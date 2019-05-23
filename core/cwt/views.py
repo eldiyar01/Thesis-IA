@@ -14,47 +14,51 @@ def home_test(request):
     return render(request, 'cwt/test_home.html', {'tests': tests})
 
 
-def test_detail(request, pk):
+def test_details(request, pk):
     test_variants = Test.objects.get(id=pk)
     return render(request, 'cwt/test_variants.html', {'test': test_variants})
 
 
-@login_required
 def questions(request, pk):
     v_questions = Variant.objects.get(id=pk)
     return render(request, 'cwt/test_questions.html', {'v_questions': v_questions})
 
 
-def maintimer(request):
-    pass
-
-
 def results(request):
     user = request.user
-    post = request.POST.items()
-    for question, answer in post:
+    user_points = []
+    all_points = []
+    all_questions = []
+    question_answer = {}
+    #logic of getting variant.all_question.correct_answers and == user.answers
+    for question, answer in request.POST.items():
         if 'question-' in question:
             _, question_pk = question.split('-')
-            answers = Answer.objects.filter(question=question_pk)
-            correct_answer = answers.get(is_correct=True)
-            user_choose = Answer.objects.filter(id=answer)[0]
-            answer_point = Question.objects.get(id=question_pk).points
-            # Question.objects.filter(id=question_pk).points
-            print('ответы', answers)
-            print('правильные ответы', correct_answer)
-            print('выбор польз', user_choose)
-            print('баллы', answer_point)
-            if correct_answer == user_choose:
-                print('write')
-
-            else:
-                print('wrong')
-    return render(request, 'cwt/test_results.html', )
+            question = Question.objects.get(pk__in=question_pk)
+            # .prefetch_related('answers')
+            all_questions.append(question)
+            question_answer[int(question_pk)] = int(answer)
+    for q in all_questions:
+        all_points.append(q.points)
+        if q.correct_answer.id == question_answer[q.id]:
+            user_points.append(q.points)
+    sum_user_points = sum(user_points)
+    all_points_sum = sum(all_points)
+    UserResult.objects.create(user=user, scores=sum_user_points)
+    if sum_user_points > 110 and sum_user_points < 200:
+        message = 'Вы молодец! Вы можете получить золотой сертификат'
+    elif sum_user_points > 200:
+        message = 'Отлично! Можете считать, что золотой сертификат у вас в руках ;)'
+    else:
+        message = 'Вам следует уделять больше внимание учебе!'
+    context = {'message': message, 'user': user,
+               'user_points': sum_user_points, 'all_points': all_points_sum}
+    return render(request, 'cwt/test_results.html', context)
 
 
 class CreateTestView(CreateView):
     model = Test
-    template_name = 'cwt/cr_udt_test.html'
+    template_name = 'crud/cr_upd_test.html'
     form_class = TestForm
 
     def form_valid(self, form):
@@ -64,7 +68,7 @@ class CreateTestView(CreateView):
 
 class UpdateTestView(UpdateView):
     model = Test
-    template_name = 'crud/cr_udt_test.html'
+    template_name = 'crud/cr_upd_test.html'
     form_class = TestForm
 
 
@@ -72,4 +76,45 @@ class DeleteTestView(DeleteView):
     model = Test
     template_name = 'crud/delete_test.html'
 
+
+class CreateVariantView(CreateView):
+    model = Variant
+    template_name = 'crud/cr_upd_variant.html'
+
+
+class UpdateVariantView(UpdateView):
+    model = Variant
+    template_name = 'crud/cr_upd_variant.html'
+
+
+class DeleteVariantView(DeleteView):
+    model = Variant
+    template_name = 'crud/delete_variant.html'
+
+
+class CreateQuestionView(CreateView):
+    model = Question
+    template_name = 'crud/cr_upd_question.html'
+
+
+class UpdateQuestionView(UpdateView):
+    model = Question
+    template_name = 'crud/cr_upd_question.html'
+
+
+class DeleteQuestionsView(DeleteView):
+    model = Question
+    template_name = 'crud/delete_question'
+
+
+class CreateAnswerView(CreateView):
+    pass
+
+
+class UpdateAnswerView(UpdateView):
+    pass
+
+
+class DeleteAnswerView(DeleteView):
+    pass
 

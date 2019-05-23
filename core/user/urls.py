@@ -1,14 +1,16 @@
 from django.urls import path, re_path
 
-from .views import LoginView, SignUpConfirmView, SignupDoneView, SignupView, home, logout, \
-    PasswordReset, PasswordResetDone, PasswordResetComplete, PasswordResetConfirm
+from .views import home, LoginView, SignUpConfirmView, SignupDoneView, SignupView, LogoutView, \
+    PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView, \
+    PasswordChangeView, PasswordChangeDoneView, \
+    FeedbackView
+
 
 app_name = 'user'
 urlpatterns = [
-    path('', home, name='profile_home'),
+    path('', home, name='profile-home'),
     path('signin/', LoginView.as_view(), name='signin'),
-    path('logout/', logout, name='logout'),
-
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', SignupView.as_view(), name='signup'),
     path('signup/done/', SignupDoneView.as_view(), name='signup-done'),
     re_path(
@@ -17,8 +19,12 @@ urlpatterns = [
         name='signup-confirm',
     ),
 
-    path('password-reset/', PasswordReset.as_view(), name='password-reset'),
-    path('password-reset/done', PasswordResetDone.as_view(), name='password-reset-done'),
-    path('reset/<uidb64>/<token>/', PasswordResetConfirm.as_view(), name='password-reset-confirm'),
-    path('password-reset/complete', PasswordResetComplete.as_view(), name='password-reset-complete')
+    path('password-reset/', PasswordResetView.as_view(), name='password-reset'),
+    path('password-reset/done', PasswordResetDoneView.as_view(), name='password-reset-done'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
+    path('password-reset/complete', PasswordResetCompleteView.as_view(), name='password-reset-complete'),
+    path('password-change/', PasswordChangeView.as_view(), name='password-change'),
+    path('password-change/done', PasswordChangeDoneView.as_view(), name='password-change-done'),
+
+    path('feedback/', FeedbackView.as_view(), name='feedback')
 ]

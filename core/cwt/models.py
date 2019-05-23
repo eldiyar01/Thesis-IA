@@ -46,6 +46,10 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def correct_answer(self):
+        return self.answers.get(is_correct=True)
+
 
 class Answer(models.Model):
     question = models.ForeignKey('Question', on_delete=models.CASCADE, related_name='answers')
@@ -63,6 +67,5 @@ class UserAnswer(models.Model):
 
 class UserResult(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='user_results')
-    variants = models.ForeignKey('Variant', on_delete=models.CASCADE, related_name='variant_results')
-    score = models.FloatField()
-    date = models.DateTimeField(auto_now_add=True)
+    scores = models.IntegerField()
+    add_time = models.DateTimeField(auto_now_add=True)

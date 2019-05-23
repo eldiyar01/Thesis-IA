@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+name: {{ name }}
+email: {{ email }}
+
+message body:
+-----------------------
+
+{{ message }}
+
+-----------------------
+date: {% now "SHORT_DATETIME_FORMAT" %}
+{% endblock %}

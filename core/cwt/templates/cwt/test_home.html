@@ -13,7 +13,11 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ test.title }}</h5>
                             <p class="card-text">{{ test.description }}</p>
-                            <p class="card-text"><small class="text-muted">Рекомендуем проходит не чеще чем 1 раз в неделю</small></p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                Рекомендуем проходит не чеще чем 1 раз в неделю
+                                </small>
+                            </p>
                             <hr>
                             <a class="btn btn-outline-primary" href="{{ test.get_absolute_url }}" role="button">
                                Начать тест

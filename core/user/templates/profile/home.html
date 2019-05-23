@@ -1,7 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if request.user.is_authenticated %}
-    Привет! {{ user }}.{% else %}
-    Привет гость!
-{% endif %}
+<div class="container bg-white pb-5 pt-3">
+    <h2 class="mb-4">Привет! {{ user }}</h2>
+    <div class="row">
+        <div class="col-3">
+            <div class="list-group mb-5">
+            <a class="list-group-item list-group-item-action text-primary" href="{% url 'cwt:home' %}">
+                Перейти к тестам
+            </a>
+            <a class="list-group-item list-group-item-action text-primary" href="">
+                Полезные источники
+            </a>
+            <a class="list-group-item list-group-item-action text-primary" href="">
+                Курсы по подготовке
+            </a>
+            <a class="list-group-item list-group-item-action text-primary" href="">
+                Официальная страница "ЦООМО"
+            </a>
+            </div>
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action text-primary" href="{% url 'user:password-change' %}">
+                    Поменять пароль
+                </a>
+                <a class="list-group-item list-group-item-action text-primary" href="{% url 'cwt:home' %}">
+                    Поменять электронную почту
+                </a>
+            </div>
+        </div>
+        <div class="col-9 pl-5">
+            <p>Ваш последний пройденный тест: </p>
+            <p>Ваши набранные баллы за последний тест: {{ user.user_results.last.scores }}
+                <small>({{ user.user_results.last.add_time }})</small>
+            </p>
+            <hr>
+            <p>Общее количество пройденных тестов: {{ user.user_results.count }}</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
