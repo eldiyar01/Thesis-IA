@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container bg-white rounded">
-    <div class="row">
-       <div class="col-12 text-center"><h2>Результаты</h2></div>
-        <div class="col">
-            <p>{{ user }}! {{ message }}</p>
-
-            <p>Вы набрали {{ user_points}} балла из {{ all_points }}</p>
-        </div>
-    </div>
+<div class="container bg-white pt-5" style="padding-bottom: 22%;">
+    <div class="row ">
+       <div class="col">
+            <h2>Результаты</h2>
+            <hr style="background-color:rgb(250,90,60)">
+            <h5>{{ user }}! {{ message }}</h5>
+            <p >Вы набрали {{ user_points}} балла из {{ all_points }}</p>
+            <a href="{% url 'cwt:home' %}" class="btn text-white" style="background-color:rgb(250,90,60)">Вернуться к тестам</a>
+            <a href="{% url 'user:profile-home' %}" class="btn text-white" style="background-color:rgb(250,90,60)">В личный кабинет</a>
+       </div>
+   </div>
 </div>
 {% endblock %}
 

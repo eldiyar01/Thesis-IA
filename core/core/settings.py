@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'django_filters',
     'cwt',
     'user'
 ]
@@ -123,15 +125,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
-MEDIAFILES_DIRS = [
-    os.path.join(BASE_DIR, "media")
-]
+MEDIAFILES_DIRS = [ os.path.join(BASE_DIR, "media")]
 
 AUTH_USER_MODEL = 'user.User'
 LOGIN_REDIRECT_URL = '/user/'
@@ -144,3 +142,8 @@ EMAIL_PORT = "587"
 EMAIL_HOST_USER = 'cowork.development@gmail.com'
 EMAIL_HOST_PASSWORD = 'quie2YeT'
 EMAIL_USE_TLS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}

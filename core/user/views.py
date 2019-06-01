@@ -14,7 +14,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, FormView
 
-from .forms import UserCreationForm, LoginForm, FeedbackForm
+from .forms import UserCreationForm, LoginForm, FeedbackForm, PasswordChangeFormCustom
 
 
 @login_required
@@ -108,6 +108,7 @@ class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
 
 
 class PasswordChangeView(auth_views.PasswordChangeView):
+    form_class = PasswordChangeFormCustom
     success_url = reverse_lazy('user:password-change-done')
     template_name = 'user/password/password_change_form.html'
 
@@ -119,8 +120,10 @@ class PasswordChangeDoneView(auth_views.PasswordResetDoneView):
 class FeedbackView(FormView):
     template_name = 'feedback_email/email_form.html'
     form_class = FeedbackForm
-    success_url = reverse_lazy(':home')
+    success_url = reverse_lazy('user:profile-home')
 
     def form_valid(self, form):
         form.send_email()
         return super().form_valid(form)
+
+

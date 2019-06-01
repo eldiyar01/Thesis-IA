@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UsernameField, AuthenticationForm
+from django.contrib.auth import get_user_model, password_validation
+from django.contrib.auth.forms import UsernameField, AuthenticationForm, SetPasswordForm, PasswordChangeForm
 from django.core.mail import send_mail
 from django.forms import widgets
 from django.template.loader import render_to_string
@@ -52,6 +52,25 @@ class LoginForm(AuthenticationForm):
     username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'}))
     password = forms.CharField(
         label=_("Password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+
+
+class PasswordChangeFormCustom(PasswordChangeForm, SetPasswordForm):
+    old_password = forms.CharField(
+        label=_("Old password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autofocus': True, 'class': 'form-control'}),
+    )
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
         strip=False,
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )

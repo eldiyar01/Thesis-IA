@@ -2,30 +2,33 @@
 {% block title %}Test variants{% endblock %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
-<div class="card text-center ml-5 mr-5">
-    <h1 class="card-header bg-white mb-5">{{ test.title }}</h1>
-    <div class="card-deck pl-3 pr-3">
+<div class="container bg-white" style="padding-bottom: 5%;">
+    <h1 class="text-center p-2">{{ test.title }}</h1>
+    <hr style="background-color:rgb(250,90,60)">
+    <div class="row p-5">
+        {% if request.user.is_authenticated %}
         {% for variants in test.variants.all %}
-         <div class="col-3">
-            <div class="card border-info mb-3" style="max-width: 18rem;">
-                <div class="card-header border-info">{{ variants.title }}</div>
-                <div class="card-body text-info">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text">{{ variants.description }}</p>
-                    <p class="card-text">Количество вопросов:   {{ variants.questions.count }}</p>
-                    <a class="btn btn-outline-info" href="{{ variants.get_absolute_url }}">start</a>
-                </div>
+         <div class="col-4">
+            <div class="card text-center" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">{{ variants.title }}</h5>
+                <hr style="background-color:rgb(250,90,60)">
+                <p class="card-text">{{ variants.description }}</p>
+                <p class="card-text text-muted">Количество вопросов: {{ variants.questions.count }}</p>
+                <a href="{{ variants.get_absolute_url }}" class="btn text-white" style="background-color:rgb(250,90,60)">Начать</a>
+              </div>
             </div>
          </div>
         {% endfor %}
+        {% else %}
+            <div class="col-12 text-center" style="padding-bottom: 23%;">
+                <p>Только зарегесттрированные пользователь могут проходить тесты пройдите
+                    <a  href="{% url 'user:signup' %}">регистрацию</a>
+                    или
+                    <a href="{% url 'user:signin' %}">войдите </a>
+                </p>
+            </div>
+        {% endif %}
     </div>
 </div>
-{% else %}
-<p>Только зарегесттрированные пользователь могут проходить тесты пройдите
-<a  href="{% url 'user:signup' %}">регистрацию</a>
-или
-<a href="{% url 'user:signin' %}">войдите </a>
-</p>
-{% endif %}
 {% endblock %}

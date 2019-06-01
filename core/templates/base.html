@@ -5,41 +5,55 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <title>{% block title %} Home {% endblock %}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/timer.js' %}" defer></script>
 </head>
-
-<body style="background-color:rgb(235,235,255)">
-    <nav class="navbar navbar-expand-lg navbar navbar-dark" style="background-color:rgb(40,20,170)">
-        <a class="navbar-brand" href="{% url 'cwt:home' %}">Testing</a>
+<body style="background-color:rgb(240,240,240)">
+    <nav class="navbar navbar-expand navbar navbar-dark p-1" style="background-color:rgb(250,90,60)">
+        <a class="navbar-brand ml-2" href="{% url 'cwt:home' %}"><h2 style="font-family:URW">Testing</h2></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 {% if not request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm" href="{% url 'user:signup' %}">Регистрация</a>
+                        <a class="btn btn-outline-light m-1 " href="{% url 'user:signup' %}">Регистрация</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm ml-1" href="{% url 'user:signin' %}">Войти</a>
+                        <a class="btn btn-outline-light m-1" href="{% url 'user:signin' %}">Войти</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm ml-1" href="{% url 'user:profile-home' %}">Личный кабинет</a>
+                        <a class="btn btn-outline-light m-1" href="{% url 'user:profile-home' %}">Личный кабинет</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm ml-1" href="{% url 'user:logout' %}">Выйти</a>
+                        <a class="btn btn-outline-light m-1" href="{% url 'user:logout' %}">Выйти</a>
                     </li>
                 {% endif %}
             </ul>
+            <form class="m-1" action="{% url 'cwt:search-result' %}">
+                <div class="input-group">
+                    <input class="form-control" placeholder="Поиск по сайту" name="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-light" type="submit">Найти</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </nav>
-{% block content %}
 
+{% block content %}
 {% endblock %}
+
 {% if request.user.is_authenticated %}
-    {% block end %}
-    <nav class="fixed-bottom" style="background-color:rgb(235,235,255)">
-        <p class="text-sm-center">Вопросы? Ошибки? Идеи для улучшения сайта? <a href="{% url 'user:feedback' %}">Обратная связь</a></p>
-    </nav>
+    {% block bottom %}
+    <div class="text-white p-2" style="background-color:rgb(250,90,60)">
+        <p class="text-sm-center">
+            Вопросы? Ошибки? Идеи для улучшения сайта?
+            <a class="btn btn-sm btn-outline-light" href="{% url 'user:feedback' %}">Обратная связь</a>
+        </p>
+    </div>
     {% endblock %}
 {% endif %}
+
 </body>
 </html>

@@ -67,5 +67,13 @@ class UserAnswer(models.Model):
 
 class UserResult(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='user_results')
+    test = models.ForeignKey('Test', on_delete=models.CASCADE, related_name='user_test', null=True)
     scores = models.IntegerField()
+    variant_scores = models.IntegerField(default=0)
     add_time = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return reverse('cwt:test-results', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['add_time']

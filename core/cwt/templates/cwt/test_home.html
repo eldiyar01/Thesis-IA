@@ -3,12 +3,12 @@
 {% block title %}Tests{% endblock %}
 
 {% block content %}
-<div class="container bg-white p-5 rounded">
+<div class="container p-5  bg-white" >
     <div class="row">
         <div class="card-deck">
             {% for test in tests %}
                 <div class="col-4">
-                    <div class="card">
+                    <div class="card border">
                         <img src="{{ test.image.url }}" class="card-img-top" height="200" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ test.title }}</h5>
@@ -18,8 +18,8 @@
                                 Рекомендуем проходит не чеще чем 1 раз в неделю
                                 </small>
                             </p>
-                            <hr>
-                            <a class="btn btn-outline-primary" href="{{ test.get_absolute_url }}" role="button">
+                            <hr style="border-color:rgb(250,90,60)">
+                            <a class="btn text-white" role="button" href="{{ test.get_absolute_url }}" style="background-color:rgb(250,90,60)">
                                Начать тест
                             </a>
                         </div>

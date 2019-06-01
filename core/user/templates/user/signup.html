@@ -27,11 +27,11 @@
                 {% endfor %}
                 <div class="form-actions text-center pt-5">
                     {% csrf_token %}
-                    <button type="submit" role="button" class="btn btn-outline-primary">Регистрация</button>
+                    <button type="submit" role="button" class="btn text-white" style="background-color:rgb(250,90,60)">Регистрация</button>
                     <hr>
-                    <p class="text small">Уже есть аккаунт?
+                    <p  style="color:rgb(250,90,60)">Уже есть аккаунт?
                     &nbsp;&nbsp;
-                    <a href="{% url 'user:signin' %}" class="btn btn-link btn-sm">Войти</a></p>
+                    <a href="{% url 'user:signin' %}">Войти</a></p>
                 </div>
             </form>
         </div>

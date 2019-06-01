@@ -2,37 +2,39 @@
 {% block title %} Questions {% endblock %}
 
 {% block content %}
-
 <div class="container bg-white  mb-5 pt-5">
     <div class="text-center">
         <h1>{{ v_questions.tests.title }}</h1>
         <h5>({{ v_questions.title }})</h5>
     </div>
-    <div id="{{ v_questions.tests.id }}" class="row sticky-top">
-        <h3>Время: </h3>
-        <h3 id="test-time"></h3>
-    </div>
+    <hr style="background-color:rgb(250,90,60)">
     <div class="row">
-        <form class="text-center col-12" method="post" action="{% url 'cwt:test-results' %}">
-            <!--hidden variant question-->
+        <div id="{{ v_questions.tests.id }}" class="col-2 text-center position-fixed">
+            <h3>Время: </h3>
+            <h3 id="test-time"></h3>
+        </div>
+        <div class="col-2"></div>
+        <form class="col-10" method="post" action="{% url 'cwt:test-results' %}">
             {% for question in v_questions.questions.all %}
-                <div class="col-12">
+                <div class="border p-4 mb-2">
                     <h4>{{ question.title }}</h4>
-                </div>
-                <input aria-hidden="true" style="display: none;" checked type="radio" name="question-{{ question.pk}}" value="0">
+                    <input aria-hidden="true" style="display: none;" checked type="radio" name="question-{{ question.pk}}" value="0">
+                    <hr>
                 {% for answer in question.answers.all %}
+                   <p>
                     <input type="radio" name="question-{{ question.pk}}" value="{{ answer.pk }}" id="{{ answer.pk }}">
                     <label for="{{ answer.pk }}"> {{ answer.text }}</label>
+                   </p>
                 {% endfor %}
-                <hr class="mb-5">
+                </div>
             {% endfor %}
-            <div class="col-12 text-center mt-5 mb-5">
-                <button class="btn btn-outline-info" id="test-end-btn" type="submit">Закончить</button>
+            <div class="text-center mt-5 mb-5">
+                <button  class="btn btn-lg btn-block text-white" style="background-color:rgb(250,90,60)" id="test-end-btn" type="submit">Закончить</button>
             </div>
             {% csrf_token %}
         </form>
     </div>
 </div>
 {% endblock %}
-{% block end %}
+{% block bottom %}
 {% endblock %}

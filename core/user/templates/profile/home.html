@@ -28,12 +28,37 @@
             </div>
         </div>
         <div class="col-9 pl-5">
-            <p>Ваш последний пройденный тест: </p>
-            <p>Ваши набранные баллы за последний тест: {{ user.user_results.last.scores }}
+            <p class="pl-2">Ваш последний пройденный тест: {{ user.user_results.last.test }} </p>
+            <p class="pl-2">Ваши набранные баллы за последний тест: {{ user.user_results.last.scores }}
                 <small>({{ user.user_results.last.add_time }})</small>
             </p>
             <hr>
-            <p>Общее количество пройденных тестов: {{ user.user_results.count }}</p>
+            <p class="pl-2">Общее количество пройденных тестов: {{ user.user_results.count }}</p>
+            <hr>
+            <div class="border pt-2 pb-2">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                   Пройденные тесты за все время:
+                </button>
+            </div>
+            <div class="collapse" id="collapseExample">
+                <div>
+                    <table class="table table-stripe">
+                        {% for u_test in user.user_results.all.reverse %}
+                            <tr>
+                                <td class="border p-4">
+                                    Тест: {{ u_test.test }}
+                                </td>
+                                <td class="border p-4">
+                                    набранные баллы: {{ u_test.scores }} из {{ u_test.variant_scores }}
+                                </td>
+                                <td class="border p-4 pl-5 pr-5">
+                                    Дата: {{ u_test.add_time }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
