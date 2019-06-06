@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-white">
+    <div class="row">
+        <div class="col-12 mt-4 mb-4">
+            <h1 class="text-center">Новости связанные с категорией: '{{ category.title.title }}'</h1>
+            <hr class="border-primary">
+        </div>
+        {% for article in category.article.all %}
+            <div class="col-3 mb-5">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ article.image.url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text">{{ article.description }}</p>
+                        <a href="{{ article.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

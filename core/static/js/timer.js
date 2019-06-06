@@ -1,11 +1,11 @@
 var timer;
-var time = 3820;
+var time = document.getElementById('time-for-test').value *60;
 test_timer()
 
 
 
 function test_timer() {
-
+    time*60
     time--;
     if (time < 0){
         clearTimeout(timer);

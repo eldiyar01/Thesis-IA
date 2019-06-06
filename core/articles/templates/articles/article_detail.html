@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-white p-4">
+    <div class="row">
+        <div class="col">
+            <div class="card text-white">
+              <img src="{{ article.image.url}}" class="card-img rounded-0" alt="...">
+              <div class="card-img-overlay">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="card-text"> {{ article.description }}</p>
+              </div>
+            </div>
+            <hr class="border-primary">
+            <p>{{ article.content }}</p>
+            <p class="text-muted mb-0">{{ article.add_date }}</p>
+            <p class="text-muted">
+                Из категории:
+                <a href="{{ article.category.get_absolute_url }}" class="button">
+                    {{ article.category }}
+                </a>
+            </p>
+            <hr class="border-primary">
+            <a href="{% url 'articles:articles-home' %}" class="btn btn-outline-primary">Назад</a>
+        </div>
+    </div>
+    <section>
+    <div class="row mt-5 mb-2">
+        <div class="col">
+            {% if comments %}
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        {% for comment in comments %}
+                            <li class="list-group-item pt-3 pb-3">
+                                {% if request.user == comment.user %}
+                                    <form action="{% url 'articles:delete-comment' comment.pk %}" method="post">
+                                        <button class="btn btn-outline-danger btn-sm float-right" type="submit">X</button>
+                                        {% csrf_token %}
+                                    </form>
+                                {% endif %}
+                                <p class="text-muted small m-0">{{ comment.user }} </p>
+                                {{ comment.content }}
+                                <p class="text-muted small m-0">{{ comment.add_time }} </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if request.user.is_authenticated %}
+    <form action="{% url 'articles:create-comment' %}" method="post">
+        {{ comment_form.as_p }}
+        <div>
+            <button type="submit" class="btn btn-outline-primary">Отправить</button>
+        </div>
+        {% csrf_token %}
+     </form>
+    {% else %}
+        <p>Только авторизованные пользователи могут оставлять комментарии</p>
+    {% endif %}
+    </section>
+</div>
+{% endblock %}

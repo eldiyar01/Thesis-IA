@@ -17,7 +17,7 @@
     </div>
     {% for test in res_tests %}
         <div class="row p-5">
-            <div class="col p-5">
+            <div class="col-6">
                 <div class="card mb-5">
                     <img src="{{ test.image.url }}" class="card-img-top" style="height: 50%;" alt="...">
                     <div class="card-body">
@@ -25,7 +25,7 @@
                         <p class="card-text">{{ test.description }}</p>
                         <p class="card-text">Количество вариантов: {{ test.variants.count }}</p>
                         <p class="card-text">Количество вопросов в одном варианте: {{ test.variants.first.questions.count }}</p>
-                        <a class="btn text-white" style="background-color:rgb(250,90,60)" href="{{ test.get_absolute_url }}">Подробнее</a>
+                        <a class="btn btn-outline-primary" href="{{ test.get_absolute_url }}">Подробнее</a>
                     </div>
                 </div>
             </div>

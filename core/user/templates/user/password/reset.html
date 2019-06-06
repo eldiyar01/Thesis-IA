@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-6 ml-auto mr-auto mt-5">
         <div class="card">
-            <div class="card-header bg-dark text-white">Password reset</div>
+            <div class="card-header">Password reset</div>
             <div class="card-body">
                 <form method="post">{% csrf_token %}
                     <fieldset class="module aligned">
@@ -40,7 +40,7 @@
 
                             <div class="form-actions text-center">
                                 {% csrf_token %}
-                                <button type="submit" role="button" class="btn btn-primary btn-dark">Восстановление доступа</button>
+                                <button type="submit" role="button" class="btn btn-outline-primary">Восстановление доступа</button>
                             </div>
                         </form>
                     </fieldset>

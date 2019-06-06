@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'cwt',
-    'user'
+    'news',
+    'articles',
+    'user',
 ]
 
 MIDDLEWARE = [

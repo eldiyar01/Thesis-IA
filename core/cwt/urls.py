@@ -1,26 +1,26 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import home_test, test_details, questions, results, \
+from .views import test_home, test_detail, variant_detail, results, \
     CreateTestView, UpdateTestView, DeleteTestView, \
     CreateVariantView, UpdateVariantView, DeleteVariantView, create_question, update_question, search_result
 
 from .viewsets import TestViewSet, VariantViewSet, QuestionViewSet, AnswerViewSet
 
 router = routers.SimpleRouter()
-router.register('test', TestViewSet)
-router.register('variant', VariantViewSet)
-router.register('question', QuestionViewSet)
-router.register('answer', AnswerViewSet)
+router.register('tests', TestViewSet)
+router.register('variants', VariantViewSet)
+router.register('questions', QuestionViewSet)
+router.register('answers', AnswerViewSet)
 
 
 app_name = 'cwt'
 urlpatterns = [
     path('api/', include(router.urls)),
 
-    path('', home_test, name='home'),
-    path('test-variants/<int:pk>/', test_details, name='test-variants'),
-    path('test-variants/questions/<int:pk>/', questions, name='test-questions'),
+    path('', test_home, name='home'),
+    path('test-variants/<int:pk>/', test_detail, name='test-variants'),
+    path('test-variants/questions/<int:pk>/', variant_detail, name='test-questions'),
     path('test-variants/questions/results/', results, name='test-results'),
 
     path('search-result/', search_result, name='search-result'),

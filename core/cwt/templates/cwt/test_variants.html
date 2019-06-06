@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container bg-white" style="padding-bottom: 5%;">
     <h1 class="text-center p-2">{{ test.title }}</h1>
-    <hr style="background-color:rgb(250,90,60)">
+    <hr class="border-primary">
     <div class="row p-5">
         {% if request.user.is_authenticated %}
         {% for variants in test.variants.all %}
@@ -12,17 +12,17 @@
             <div class="card text-center" style="width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title">{{ variants.title }}</h5>
-                <hr style="background-color:rgb(250,90,60)">
+                <hr class="border-primary">
                 <p class="card-text">{{ variants.description }}</p>
                 <p class="card-text text-muted">Количество вопросов: {{ variants.questions.count }}</p>
-                <a href="{{ variants.get_absolute_url }}" class="btn text-white" style="background-color:rgb(250,90,60)">Начать</a>
+                <a href="{{ variants.get_absolute_url }}" class="btn btn-outline-primary">Начать</a>
               </div>
             </div>
          </div>
         {% endfor %}
         {% else %}
             <div class="col-12 text-center" style="padding-bottom: 23%;">
-                <p>Только зарегесттрированные пользователь могут проходить тесты пройдите
+                <p>Только зарегестрированные пользователи могут проходить тесты пройдите
                     <a  href="{% url 'user:signup' %}">регистрацию</a>
                     или
                     <a href="{% url 'user:signin' %}">войдите </a>

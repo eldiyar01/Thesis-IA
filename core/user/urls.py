@@ -1,13 +1,22 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
+from rest_framework import routers
 
 from .views import home, LoginView, SignUpConfirmView, SignupDoneView, SignupView, LogoutView, \
     PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView, \
     PasswordChangeView, PasswordChangeDoneView, \
     FeedbackView
 
+from .viewsets import UserViewSet
+
+
+router = routers.SimpleRouter()
+router.register('users', UserViewSet)
+
 
 app_name = 'user'
 urlpatterns = [
+    path('api/', include(router.urls)),
+
     path('', home, name='profile-home'),
     path('signin/', LoginView.as_view(), name='signin'),
     path('logout/', LogoutView.as_view(), name='logout'),

@@ -126,4 +126,3 @@ class FeedbackView(FormView):
         form.send_email()
         return super().form_valid(form)
 
-

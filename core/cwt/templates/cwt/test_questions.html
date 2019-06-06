@@ -4,22 +4,23 @@
 {% block content %}
 <div class="container bg-white  mb-5 pt-5">
     <div class="text-center">
-        <h1>{{ v_questions.tests.title }}</h1>
-        <h5>({{ v_questions.title }})</h5>
+        <h1>{{ variant.tests.title }}</h1>
+        <input type="hidden" id="time-for-test" value="{{ variant.tests.time }}">
+        <h5>({{ variant.title }})</h5>
     </div>
-    <hr style="background-color:rgb(250,90,60)">
+    <hr class="border-primary">
     <div class="row">
-        <div id="{{ v_questions.tests.id }}" class="col-2 text-center position-fixed">
+        <div class="col-2 text-center position-fixed">
             <h3>Время: </h3>
             <h3 id="test-time"></h3>
         </div>
         <div class="col-2"></div>
         <form class="col-10" method="post" action="{% url 'cwt:test-results' %}">
-            {% for question in v_questions.questions.all %}
+            {% for question in variant.questions.all %}
                 <div class="border p-4 mb-2">
                     <h4>{{ question.title }}</h4>
                     <input aria-hidden="true" style="display: none;" checked type="radio" name="question-{{ question.pk}}" value="0">
-                    <hr>
+                    <hr class="border-primary">
                 {% for answer in question.answers.all %}
                    <p>
                     <input type="radio" name="question-{{ question.pk}}" value="{{ answer.pk }}" id="{{ answer.pk }}">
@@ -29,7 +30,7 @@
                 </div>
             {% endfor %}
             <div class="text-center mt-5 mb-5">
-                <button  class="btn btn-lg btn-block text-white" style="background-color:rgb(250,90,60)" id="test-end-btn" type="submit">Закончить</button>
+                <button  class="btn btn-lg btn-block btn-outline-primary" id="test-end-btn" type="submit">Закончить</button>
             </div>
             {% csrf_token %}
         </form>

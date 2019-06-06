@@ -10,14 +10,26 @@
     <script src="{% static 'js/timer.js' %}" defer></script>
 </head>
 <body style="background-color:rgb(240,240,240)">
-    <nav class="navbar navbar-expand navbar navbar-dark p-1" style="background-color:rgb(250,90,60)">
-        <a class="navbar-brand ml-2" href="{% url 'cwt:home' %}"><h2 style="font-family:URW">Testing</h2></a>
+    <nav class="navbar navbar-expand navbar navbar-dark bg-primary p-1">
+        <a class="navbar-brand ml-2" href="{% url 'cwt:home' %}"><h2 style="font-family:URW">MySite</h2></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'cwt:home' %}"><h5>Тесты</h5></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'news:news-home' %}"><h5>Новости</h5></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'articles:articles-home' %}"><h5>Статьи</h5></a>
+                    </li>
+            </ul>
             <ul class="navbar-nav ml-auto">
                 {% if not request.user.is_authenticated %}
                     <li class="nav-item">
                         <a class="btn btn-outline-light m-1 " href="{% url 'user:signup' %}">Регистрация</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="btn btn-outline-light m-1" href="{% url 'user:signin' %}">Войти</a>
                     </li>
@@ -46,7 +58,7 @@
 
 {% if request.user.is_authenticated %}
     {% block bottom %}
-    <div class="text-white p-2" style="background-color:rgb(250,90,60)">
+    <div class="text-white bg-primary p-1">
         <p class="text-sm-center">
             Вопросы? Ошибки? Идеи для улучшения сайта?
             <a class="btn btn-sm btn-outline-light" href="{% url 'user:feedback' %}">Обратная связь</a>

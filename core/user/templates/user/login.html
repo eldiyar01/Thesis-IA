@@ -28,11 +28,13 @@
 
                 <div class="form-actions text-center p-5">
                     {% csrf_token %}
-                    <button type="submit" role="button" class="btn text-white" style="background-color:rgb(250,90,60)">Войти</button>
+                    <button type="submit" role="button" class="btn btn-outline-primary">Войти</button>
                     &nbsp;&nbsp;
-                    <a href="{% url 'user:password-reset' %}" style="color:rgb(250,90,60)">Забыли пароль?</a>
-                    <hr>
-                    <a href="{% url 'user:signup' %}" style="color:rgb(250,90,60)">Зарегестрироваться</a>
+                    <a href="{% url 'user:password-reset' %}">Забыли пароль?</a>
+                    <hr class="border-primary">
+                    <p class="small">
+                        <a href="{% url 'user:signup' %}">Зарегестрироваться</a>
+                    </p>
                 </div>
             </form>
         </div>

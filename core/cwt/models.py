@@ -15,8 +15,9 @@ def upload_to(instance, filename):
 
 
 class Test(models.Model):
-    title = models.CharField(max_length=35, unique=True)
+    title = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=255)
+    time = models.IntegerField(default=30)
     image = models.ImageField(upload_to=upload_to, blank=True, null=True)
 
     def get_absolute_url(self):
@@ -60,11 +61,6 @@ class Answer(models.Model):
         return self.text
 
 
-class UserAnswer(models.Model):
-    user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='user_answers')
-    answer = models.ForeignKey('Answer', on_delete=models.CASCADE, related_name='+')
-
-
 class UserResult(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='user_results')
     test = models.ForeignKey('Test', on_delete=models.CASCADE, related_name='user_test', null=True)
@@ -77,3 +73,4 @@ class UserResult(models.Model):
 
     class Meta:
         ordering = ['add_time']
+
