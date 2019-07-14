@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container bg-white" style="padding-bottom: 31%">
     <div class="row">
-        <div class="col">
+        <div class="col text-center pt-5">
             <h2>Вы вышли</h2>
             <a href="{% url 'user:signin' %}">Войти</a>
         </div>
     </div>
+</div>
 {% endblock %}

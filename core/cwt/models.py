@@ -1,15 +1,14 @@
-import uuid
-
 from django.db import models
 from django.urls import reverse
 
 
 def upload_to(instance, filename):
     ext = filename.split('.')[-1]
-    filename = "{}.{}".format(uuid.uuid4(), ext.lower())
+    name =filename.split('.')[0]
+    filename = "{}.{}".format(name, ext.lower())
 
     return 'media/{sub}/{filename}'.format(
-        sub=filename[:2],
+        sub=name,
         filename=filename
         )
 
@@ -28,7 +27,7 @@ class Test(models.Model):
 
 
 class Variant(models.Model):
-    tests = models.ForeignKey('Test', on_delete=models.CASCADE, related_name='variants')
+    test = models.ForeignKey('Test', on_delete=models.CASCADE, related_name='variants')
     title = models.CharField(max_length=15)
     description = models.CharField(max_length=255, blank=True, null=True)
 
@@ -40,12 +39,12 @@ class Variant(models.Model):
 
 
 class Question(models.Model):
-    variants = models.ForeignKey('Variant', on_delete=models.CASCADE, related_name='questions')
-    title = models.CharField(max_length=255, unique=True)
+    variant = models.ForeignKey('Variant', on_delete=models.CASCADE, related_name='questions')
+    text = models.CharField(max_length=255, unique=True)
     points = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.title
+        return self.text
 
     @property
     def correct_answer(self):

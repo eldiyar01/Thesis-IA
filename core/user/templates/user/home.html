@@ -5,29 +5,35 @@
     <div class="row">
         <div class="col-3">
             <div class="list-group mb-5">
-            <a class="list-group-item list-group-item-action text-primary" href="{% url 'cwt:home' %}">
-                Перейти к тестам
-            </a>
-            <a class="list-group-item list-group-item-action text-primary" href="">
-                Полезные источники
-            </a>
-            <a class="list-group-item list-group-item-action text-primary" href="">
-                Курсы по подготовке
-            </a>
-            <a class="list-group-item list-group-item-action text-primary" href="">
-                Официальная страница "ЦООМО"
-            </a>
+                <a class="list-group-item list-group-item-action text-primary" href="{% url 'home' %}">
+                    На главную
+                </a>
+                <a class="list-group-item list-group-item-action text-primary" href="{% url 'cwt:home' %}">
+                    Перейти к тестам
+                </a>
+                <a class="list-group-item list-group-item-action text-primary" href="">
+                    Полезные источники
+                </a>
+                <a class="list-group-item list-group-item-action text-primary" href="">
+                    Курсы по подготовке
+                </a>
+                <a class="list-group-item list-group-item-action text-primary" href="">
+                    Официальная страница "ЦООМО"
+                </a>
             </div>
             <div class="list-group">
                 <a class="list-group-item list-group-item-action text-primary" href="{% url 'user:password-change' %}">
                     Поменять пароль
                 </a>
-                <a class="list-group-item list-group-item-action text-primary" href="{% url 'cwt:home' %}">
-                    Поменять электронную почту
-                </a>
             </div>
         </div>
         <div class="col-9 pl-5">
+            {% if request.user.is_staff %}
+                {% for test in tests %}
+                    {{ test.title }}
+                {% endfor %}
+            {% endif %}
+
             <p class="pl-2">Ваш последний пройденный тест: {{ user.user_results.last.test }} </p>
             <p class="pl-2">Ваши набранные баллы за последний тест: {{ user.user_results.last.scores }}
                 <small>({{ user.user_results.last.add_time }})</small>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-white">
+    <div class="row pb-5">
+        <div class="col p-5">
+          <h2 class="mb-3">Добавлене нового вопроса </h2>
+          <h4 class="text-muted">(для '{{variant.test.title }}', '{{ variant.title }}')</h4>
+          <p class="lead">Добавьте сначала текст вопроса и укажите баллы</p>
+          <form class="mb-5" method="post" novalidate>
+            {% csrf_token %}
+            {{ form }}
+            <input type=button class="btn btn-outline-primary ml-2 mt-4" value="Отменить" onClick="javascript:history.go(-1);">
+            <button type="submit" class="btn btn-outline-primary mt-4 ">Сохранить</button>
+          </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

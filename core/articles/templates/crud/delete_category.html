@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Category delete{% endblock %}
+
+{% block content %}
+    <div class="container pb-2">
+        <div class="row pb-5">
+            <div class="col p-5">
+                <div class="border-danger card text-center m-5">
+                    <div class="card-header">
+                        Удаление
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">'{{ category.title }}'</h5>
+                        <p class="card-text">Вы и в правду хотите удалить без возвратно: '{{ category.title }}'?</p>
+                        <p class="card-text text-muted">
+                            (Вместе с '{{ category.title }}', удаляться и все принадлежащие ему объекты)
+                        </p>
+                        <form method="post">
+                            <a href="{% url 'articles:articles-home' %}" class="btn btn-primary">Отмена</a>
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

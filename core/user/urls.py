@@ -17,7 +17,7 @@ app_name = 'user'
 urlpatterns = [
     path('api/', include(router.urls)),
 
-    path('', home, name='profile-home'),
+    path('', home, name='user-home'),
     path('signin/', LoginView.as_view(), name='signin'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', SignupView.as_view(), name='signup'),

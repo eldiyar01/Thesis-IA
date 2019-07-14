@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Tests{% endblock %}
 
 {% block content %}
 <div class="container p-5  bg-white" >
     <div class="row">
-        <div class="card-deck">
+        <div class="card-deck ">
             {% for test in tests %}
-                <div class="col-4">
-                    <div class="card border">
-                        <img src="{{ test.image.url }}" class="card-img-top" height="200" alt="...">
-                        <div class="card-body">
+                <div class="col-4 mb-5">
+                    <div class="card border" style="height: 100%;">
+                        {% if test.image %}
+                        <img src="{{ test.image.url }}" class="card-img-top" height="200">
+                        {% else %}
+                        <img src="{% static 'logo/logo.png' %}" class="card-img-top" height="200">
+                        {% endif %}
+                        <div class="card-body" >
                             <h5 class="card-title">{{ test.title }}</h5>
                             <p class="card-text">{{ test.description }}</p>
                             <p class="card-text">
@@ -23,10 +27,26 @@
                                Начать тест
                             </a>
                         </div>
+                        {% if request.user.is_authenticated and request.user.is_staff %}
+                            {% block admin-buttons %}
+                                <div class="card-footer admin-buttons">
+                                    <a class="btn btn-outline-primary btn-sm" href="{% url 'cwt:test-update' test.id %}">
+                                        Изменить
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-sm" href="{% url 'cwt:test-delete' test.id %}">
+                                        Удалить
+                                    </a>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block admin_panel %}
+<a class="btn btn-outline-primary" href="{% url 'cwt:test-create' %}">Создать тест</a>
 {% endblock %}

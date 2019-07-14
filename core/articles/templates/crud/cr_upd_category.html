@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Category create or update{% endblock %}
+{% block content %}
+<div class="container bg-white">
+    <div class="row">
+        <div class="col p-5">
+            <form method="post">
+                {{ form.as_p }}
+                <a href="{% url 'articles:articles-home' %}" class="btn btn-outline-primary">Отмена</a>
+                <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

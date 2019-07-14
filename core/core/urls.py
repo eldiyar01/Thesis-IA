@@ -18,9 +18,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .views import home
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('cwt.urls', namespace='home')),
+    path('', home, name='home'),
+    path('tests/', include('cwt.urls', namespace='tests')),
     path('news/', include('news.urls', namespace='news')),
     path('articles/', include('articles.urls', namespace='articles')),
     path('user/', include('user.urls', namespace='user')),

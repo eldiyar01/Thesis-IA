@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container bg-white p-4">
     <div class="row">
         <div class="col">
-            <div class="card text-white">
-              <img src="{{ article.image.url}}" class="card-img rounded-0" alt="...">
-              <div class="card-img-overlay">
-                <h5 class="card-title">{{ article.title }}</h5>
+            <div class="card">
+            {% if article.image %}
+                <img src="{{ article.image.url}}" class="card-img rounded-0" alt="...">
+            {% else %}
+                <img src="{% static 'logo/logo.png' %}" class="bg-info card-img rounded-0">
+            {% endif %}
+            <div class="card-header">
+                <h2 class="card-title">{{ article.title }}</h2>
+                <hr>
                 <p class="card-text"> {{ article.description }}</p>
-              </div>
+            </div>
             </div>
             <hr class="border-primary">
             <p>{{ article.content }}</p>
@@ -32,13 +38,17 @@
                     <ul class="list-group list-group-flush">
                         {% for comment in comments %}
                             <li class="list-group-item pt-3 pb-3">
-                                {% if request.user == comment.user %}
+                                {% if request.user == comment.user or request.user.is_staff %}
                                     <form action="{% url 'articles:delete-comment' comment.pk %}" method="post">
                                         <button class="btn btn-outline-danger btn-sm float-right" type="submit">X</button>
                                         {% csrf_token %}
                                     </form>
                                 {% endif %}
-                                <p class="text-muted small m-0">{{ comment.user }} </p>
+                                {% if comment.user.is_staff %}
+                                    <p class="text-muted small m-0">Admin</p>
+                                {% else %}
+                                    <p class="text-muted small m-0">{{ comment.user }} </p>
+                                {% endif %}
                                 {{ comment.content }}
                                 <p class="text-muted small m-0">{{ comment.add_time }} </p>
                             </li>

@@ -19,7 +19,7 @@ from .forms import UserCreationForm, LoginForm, FeedbackForm, PasswordChangeForm
 
 @login_required
 def home(request):
-    return render(request, 'profile/home.html')
+    return render(request, 'user/home.html')
 
 
 class LogoutView(auth_views.LogoutView):
@@ -120,7 +120,7 @@ class PasswordChangeDoneView(auth_views.PasswordResetDoneView):
 class FeedbackView(FormView):
     template_name = 'feedback_email/email_form.html'
     form_class = FeedbackForm
-    success_url = reverse_lazy('user:profile-home')
+    success_url = reverse_lazy('user:user-home')
 
     def form_valid(self, form):
         form.send_email()

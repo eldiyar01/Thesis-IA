@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container pb-2">
+        <div class="row pb-5">
+            <div class="col p-5">
+                <div class="border-danger card text-center m-5">
+                    <div class="card-header">
+                        Удаление
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            '{{ question.text }} ({{ question.variant.test.title }}, {{ question.variant.title }})'
+                        </h5>
+                        <p class="card-text">Вы и в правду хотите удалить без возвратно: '{{ question.text }}'?</p>
+                        <p class="card-text text-muted">
+                            (Вместе с '{{ question.text }}', удаляться и все принадлежащие ему объекты)
+                        </p>
+                        <form method="post">
+                            <input type=button class="btn btn-outline-primary" value="Отмена" onClick="javascript:history.go(-1);">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

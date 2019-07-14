@@ -8,18 +8,20 @@ from .models import Test, Variant, Question
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ['title', 'description', 'image']
+        fields = ['title', 'time', 'description', 'image']
         widgets = {
             'title': widgets.TextInput(attrs={'class': 'form-control'}),
-            'description': widgets.Textarea(attrs={'class': 'form-control'})
+            'description': widgets.Textarea(attrs={'class': 'form-control'}),
+            'time': widgets.NumberInput(attrs={'class': 'form-control'})
         }
 
 
 class VariantForm(forms.ModelForm):
     class Meta:
         model = Variant
-        fields = ['title', 'description']
+        fields = ['test', 'title', 'description']
         widgets = {
+            'test': widgets.Select(attrs={'class': 'custom-select'}),
             'title': widgets.TextInput(attrs={'class': 'form-control'}),
             'description': widgets.Textarea(attrs={'class': 'form-control'})
         }
@@ -28,7 +30,11 @@ class VariantForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['title', 'points']
+        fields = ['text', 'points']
+        widgets = {
+            'text': widgets.TextInput(attrs={'class': 'form-control'}),
+            'points': widgets.NumberInput(attrs={'class': 'form-control'})
+        }
 
 
 class AnswersForm(forms.BaseInlineFormSet):
@@ -41,7 +47,7 @@ class AnswersForm(forms.BaseInlineFormSet):
                     has_one_correct_answer = True
                     break
         if not has_one_correct_answer:
-            raise ValidationError('Mark.', code='no_correct_answer')
+            raise ValidationError('Ошибка. Вы не указали правильный ответ', code='no_correct_answer')
 
 
 

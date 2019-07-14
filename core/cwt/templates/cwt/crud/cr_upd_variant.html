@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-white">
+    <div class="row ">
+        <div class="col p-5">
+            <form method="post">
+                {{ form.as_p }}
+                <input type=button class="btn btn-outline-primary" value="Отмена" onClick="javascript:history.go(-1);">
+                <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block bottom %}
+{% endblock %}

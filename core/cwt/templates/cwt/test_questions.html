@@ -4,8 +4,8 @@
 {% block content %}
 <div class="container bg-white  mb-5 pt-5">
     <div class="text-center">
-        <h1>{{ variant.tests.title }}</h1>
-        <input type="hidden" id="time-for-test" value="{{ variant.tests.time }}">
+        <h1>{{ variant.test.title }}</h1>
+        <input type="hidden" id="time-for-test" value="{{ variant.test.time }}">
         <h5>({{ variant.title }})</h5>
     </div>
     <hr class="border-primary">
@@ -18,7 +18,7 @@
         <form class="col-10" method="post" action="{% url 'cwt:test-results' %}">
             {% for question in variant.questions.all %}
                 <div class="border p-4 mb-2">
-                    <h4>{{ question.title }}</h4>
+                    <h4>{{ question.text }}</h4>
                     <input aria-hidden="true" style="display: none;" checked type="radio" name="question-{{ question.pk}}" value="0">
                     <hr class="border-primary">
                 {% for answer in question.answers.all %}
@@ -27,15 +27,39 @@
                     <label for="{{ answer.pk }}"> {{ answer.text }}</label>
                    </p>
                 {% endfor %}
+                    {% if request.user.is_authenticated and request.user.is_staff %}
+                        {% block admin-buttons %}
+                            <hr>
+                            <div class="admin-buttons text-center">
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="{% url 'cwt:question-update' question.variant.test.id question.variant.id question.id %}">
+                                    Изменить
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'cwt:question-delete' question.variant.test.id question.variant.id question.id %}">
+                                    Удалить
+                                </a>
+                            </div>
+                        {% endblock %}
+                    {% endif %}
                 </div>
             {% endfor %}
             <div class="text-center mt-5 mb-5">
-                <button  class="btn btn-lg btn-block btn-outline-primary" id="test-end-btn" type="submit">Закончить</button>
+                <button  class="btn btn-lg btn-block btn-outline-primary" id="test-end-btn" type="submit">
+                    Закончить
+                </button>
             </div>
             {% csrf_token %}
         </form>
     </div>
 </div>
 {% endblock %}
+
+{% block admin_panel %}
+    <a class="btn btn-outline-primary" href="{% url 'cwt:question-create' variant.test.id variant.id %}">
+        Создать вопрос
+    </a>
+{% endblock %}
+
 {% block bottom %}
 {% endblock %}

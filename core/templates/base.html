@@ -3,15 +3,17 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'custom_css/custom.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <title>{% block title %} Home {% endblock %}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
     <script src="{% static 'js/timer.js' %}" defer></script>
 </head>
-<body style="background-color:rgb(240,240,240)">
-    <nav class="navbar navbar-expand navbar navbar-dark bg-primary p-1">
-        <a class="navbar-brand ml-2" href="{% url 'cwt:home' %}"><h2 style="font-family:URW">MySite</h2></a>
+<body style="background-color:rgb(230,240,255)">
+<header>
+    <nav class="navbar navbar-expand navbar-dark bg-primary p-2">
+        <a class="navbar-brand ml-2" href="{% url 'home' %}"><h2 style="font-family:URW">Tester</h2></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -29,13 +31,12 @@
                     <li class="nav-item">
                         <a class="btn btn-outline-light m-1 " href="{% url 'user:signup' %}">Регистрация</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="btn btn-outline-light m-1" href="{% url 'user:signin' %}">Войти</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-outline-light m-1" href="{% url 'user:profile-home' %}">Личный кабинет</a>
+                        <a class="btn btn-outline-light m-1" href="{% url 'user:user-home' %}">Личный кабинет</a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-outline-light m-1" href="{% url 'user:logout' %}">Выйти</a>
@@ -46,26 +47,135 @@
                 <div class="input-group">
                     <input class="form-control" placeholder="Поиск по сайту" name="search">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-light" type="submit">Найти</button>
+                        <button class="btn btn-outline-light" type="submit">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path>
+                        </svg>
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </nav>
+</header>
 
 {% block content %}
+<!--style="background-color: #74b9ff"-->
+<div class="media jumbotron p-5 bg-light text-primary">
+    <div class="col-md-6">
+        <h1 class="display-4 font-italic">Добро пожаловать на Tester.kg!</h1>
+        <p class="lead" style="font-family:URW">
+            Здесь вы можете пройти тесты практчески на любую тему в сфере образования,
+            также прочитать новости из той же сферы и полезные статьи.
+        </p>
+    </div>
+    <img src="{% static 'logo/logo.png' %}" width="40%" class="ml-5" alt="...">
+</div>
+<div class="container bg-white">
+    <div class="row">
+        <div class="col-md-8 blog-main">
+            <div class="blog-post">
+                <h2 class="blog-post-title font-italic font-weight-bold">Для чего нужны тесты</h2>
+                <p>
+                    Тестирование – это стандартизированный метод оценки знаний, умений, навыков учащихся,
+                    который помогает выявить и сформировать индивидуальный темп обучения, пробелы в текущей
+                    итоговой подготовке.
+                </p>
+                <hr class="border-primary">
+                <p>
+                    Путь к созданию тестов – изучение теории и методики тестового контроля знаний.
+                    Здесь самое главное – осознать, что тест – это не просто проба или ученическая проверка
+                    с помощью традиционных вопросов, а научно-обоснованный метод, представляющий систему заданий
+                    специфической формы, возрастающей трудности,
+                    определенного содержания, позволяющий качественно оценить структуру знаний и
+                    эффективно измерить их уровень.
+                    Актуальность работы обусловлена нетрадиционным подходом к проверке знаний как
+                    механизму активизации познавательной деятельности учащихся.
+                </p>
+                <p>
+                    На нашем сайте доступно большое количество тестов.
+                    Посвящены эти тесты в основном образованию  .
+                    Эти тесты наиболее необходимы для абитуриентов, желающих проверить свои знания.
+                </p>
+                <hr class="border-primary">
+                <h3 class="font-italic">Цель</h3>
+                <p>Тест как измерительный инструмент. Тестология как теория и практика тестирования
+                    существует более 120 лет и за это время накоплен громадный опыт использования тестов
+                    в различных сферах человеческой деятельности, включая и образование.
+                <p>
+                    Тесты – не только более качественный, но и значительно более объективный способ оценивания.
+                    Объективность тестирования достигается путем стандартизации процедуры проведения и
+                    путем стандартизации и проверки показателей качества отдельных заданий и тестов в целом.
+                </p>
+                <p>
+                    Тесты представляют собой своеобразную базу для проведения мониторинга, корректировки сравнений,
+                    определения уровня усвоения материала.
+                </p>
+                <p>
+                    Таким образом, тест – это измерительный инструмент с точки зрения оценивания.
+                    Отличие тестов от контрольных работ является его оснащение, то есть существование жесткой
+                    процедуры проведения. Отличие тестов от экзаменов состоит в том, что тесты,
+                    используя единые критерии оценки, ставят всех учащихся в равные условия, а это приводит
+                    снижению предэкзаменационных нервных напряжений. Широта теста позволяет ученикам показать
+                    свои достижения на широком поле материала. Кроме того, тесты – это эффективный инструмент
+                    с экономической точки зрения. Но важнейшее отличие тестов от других форм поверки знаний
+                    – его технологичность: задания имеют точный однозначный ответ, и оценивается стандартно.
+                </p>
+                <hr class="border-primary">
+                <h2 class="font-italic">Условия тестов</h2>
+                <p>
+                    это тесты централизованного тестирования за последние годы.
+                    Ими могут пользоваться как абитуриенты, так и любой желающий при помощи Интернета.
+                    Работа над тестами идет постоянно, они постоянно обновляются, совершенствуется их внешний вид.
+                    С помощью тестов каждый может попробовать свои силы еще до экзаменов и до тестирования,
+                    найти свои слабые места и исправить свои ошибки.
+                    К тому же эти тесты дают абитуриентам некоторое представление о том, что их ждет в дальнейшем.
+                </p>
+            </div>
+            <nav class="blog-pagination mb-5">
+                <a class="btn btn-outline-primary" href="{% url 'user:signup' %}#">Начать</a>
+            </nav>
+        </div>
+
+        <aside class="col-md-4 blog-sidebar">
+            <div class="p-4 mb-3 bg-light rounded">
+                <h4 class="font-italic">О нас</h4>
+                <p class="mb-0">
+                    Страница «о нас» нужна.
+                    В противном случае приходится смотреть на копирайт (год создания) и искать отзывы.
+                    А ведь можно облегчить задачу, создав хорошую, продающую
+                    страницу о компании и собрав своеобразный FAQ .
+                </p>
+            </div>
+            <div class="p-4">
+                <h4 class="font-italic">Мы в соцсетях:</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ol>
+            </div>
+        </aside>
+    </div>
+</div>
 {% endblock %}
+
+{% if request.user.is_authenticated and request.user.is_staff %}
+    <div class="admin-panel">
+        <a class="btn btn-primary " href="/admin">Django admin</a>
+        {% block admin_panel %}
+        {% endblock %}
+    </div>
+{% endif %}
 
 {% if request.user.is_authenticated %}
     {% block bottom %}
-    <div class="text-white bg-primary p-1">
+    <footer class="text-white bg-primary p-1">
         <p class="text-sm-center">
             Вопросы? Ошибки? Идеи для улучшения сайта?
             <a class="btn btn-sm btn-outline-light" href="{% url 'user:feedback' %}">Обратная связь</a>
         </p>
-    </div>
+    </footer>
     {% endblock %}
 {% endif %}
-
 </body>
 </html>

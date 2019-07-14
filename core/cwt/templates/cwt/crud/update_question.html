@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-white p-5">
+  <h2 class="mb-2" aria-current="page">{{ question.variant.test.title }}</h2>
+  <h3 class="mb-3">{{ question.variant.title }}</h3>
+  <hr>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {{ form}}
+    <div class="card mt-5  mb-3{% if formset.errors %} border-danger{% endif %}">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-8">
+            <strong>Ответы</strong>
+          </div>
+          <div class="col-2">
+            <strong>Правильный ответ</strong>
+          </div>
+          <div class="col-2">
+            <strong>Удалить</strong>
+          </div>
+        </div>
+      </div>
+      {% for error in formset.non_form_errors %}
+        <div class="card-body bg-danger border-danger text-white py-2">{{ error }}</div>
+      {% endfor %}
+      <div class="list-group list-group-flush list-group-formset">
+        {% for form in formset %}
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-8">
+                {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+                {{ form.text }}
+                {% if form.instance.pk and form.text.value != form.instance.text %}<p class="mb-0 mt-1"><small class="text-muted font-italic"><strong>Old answer:</strong> {{ form.instance.text }}</small></p>{% endif %}
+              </div>
+              <div class="col-2">
+                {{ form.is_correct }}
+              </div>
+              <div class="col-2">
+                {% if form.instance.pk %}
+                  {{ form.DELETE }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <p>
+      <small class="form-text text-muted">Ваш вопрос может иметь минимум <strong>2</strong> ответа и максимум <strong>10</strong> овтетов, из которых 1 правильный</small>
+    </p>
+    <button type="submit" class="btn btn-outline-success">Сохранить</button>
+  </form>
+  </div>
+{% endblock %}
